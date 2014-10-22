@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MailSettingsSchema"
+    targetNamespace="http://king-ict.hr/MailSettingsSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://king-ict.hr/MailSettingsSchema.xsd"
+    xmlns:mstns="http://king-ict.hr/MailSettingsSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified"
+>
+  <xs:element name="mailSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="server">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string"></xs:attribute>
+            <xs:attribute name="timeout" type="xs:int"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="credentials">
+          <xs:complexType>
+            <xs:attribute name="username" type="xs:string"></xs:attribute>
+            <xs:attribute name="password" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="from">
+          <xs:complexType>
+            <xs:attribute name="email" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="recipients">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="add" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="email" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="cc" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="add" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="email" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="bcc" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="add" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="email" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

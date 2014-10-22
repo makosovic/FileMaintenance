@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema id="FileMaintenanceScheme"
+    targetNamespace="http://king-ict.hr/FileMaintenanceSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://king-ict.hr/FileMaintenanceSchema.xsd"
+    xmlns:mstns="http://king-ict.hr/FileMaintenanceSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:simpleType name="alertcondition">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LowDisk" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:element name="fileMaintenance">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="folder" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="backups">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="add">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"></xs:attribute>
+                        <xs:attribute name="path" type="xs:string"></xs:attribute>
+                        <xs:attribute name="keepFor" type="xs:string"></xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string"></xs:attribute>
+            <xs:attribute name="path" type="xs:string"></xs:attribute>
+            <xs:attribute name="keepFor" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="alerts" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="add" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="when" type="alertcondition" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="summary" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
