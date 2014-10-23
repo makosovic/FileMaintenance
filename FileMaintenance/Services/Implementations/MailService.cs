@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Mail;
 using FileMaintenance.Core.Helpers;
 
@@ -37,8 +38,8 @@ namespace FileMaintenance.Services
             mailMessage.Body = message;
 
             mailMessage.To.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Recipients));
-            if (_mailServiceConfig.CcCount != 0) mailMessage.CC.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Cc));
-            if (_mailServiceConfig.BccCount != 0) mailMessage.Bcc.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Bcc));
+            if (_mailServiceConfig.Cc.Any()) mailMessage.CC.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Cc));
+            if (_mailServiceConfig.Bcc.Any()) mailMessage.Bcc.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Bcc));
 
             _mailServiceConfig.SmtpClient.Send(mailMessage);
         }
@@ -57,8 +58,8 @@ namespace FileMaintenance.Services
             mailMessage.Body = message;
 
             mailMessage.To.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Recipients));
-            if (_mailServiceConfig.CcCount != 0) mailMessage.CC.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Cc));
-            if (_mailServiceConfig.BccCount != 0) mailMessage.Bcc.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Bcc));
+            if (_mailServiceConfig.Cc.Any()) mailMessage.CC.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Cc));
+            if (_mailServiceConfig.Bcc.Any()) mailMessage.Bcc.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Bcc));
 
             await _mailServiceConfig.SmtpClient.SendMailAsync(mailMessage);
         }

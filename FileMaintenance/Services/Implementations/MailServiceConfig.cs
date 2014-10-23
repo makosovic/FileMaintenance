@@ -32,9 +32,6 @@ namespace FileMaintenance.Services
         public IEnumerable<string> Recipients { get { return _recipients.AsEnumerable(); } }
         public IEnumerable<string> Cc { get { return _cc.AsEnumerable(); } }
         public IEnumerable<string> Bcc { get { return _bcc.AsEnumerable(); } }
-        public int RecipientsCount { get { return _recipients.Count; } }
-        public int CcCount { get { return _cc.Count; } }
-        public int BccCount { get { return _bcc.Count; } }
 
         #endregion
 
