@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System;
 using FileMaintenance.Services;
 
 namespace FileMaintenance
@@ -8,16 +7,15 @@ namespace FileMaintenance
     {
         static void Main()
         {
-            IMaintenanceServiceConfig maintenanceServiceConfig = new MaintenanceServiceConfig();
-            IMailServiceConfig mailServiceConfig = new MailServiceConfig();
+            IMaintenanceService maintenanceService = new MaintenanceService();
 
-            INotificationService mailService = new MailService(mailServiceConfig);
-
-            ICollection<INotificationService> notificationServices = new Collection<INotificationService>();
-            notificationServices.Add(mailService);
-
-            IMaintenanceService maintenanceService = new MaintenanceService(notificationServices, maintenanceServiceConfig);
-            maintenanceService.Start();
+            try
+            {
+                maintenanceService.Start();
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
