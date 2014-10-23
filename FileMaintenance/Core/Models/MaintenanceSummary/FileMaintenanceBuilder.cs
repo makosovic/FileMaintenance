@@ -73,22 +73,48 @@ namespace FileMaintenance.Core.Models
         /// </summary>
         public void Execute()
         {
-            Queue<string> directoriesToBeVisited = new Queue<string>();
-
             if (_backupAction != null || _cleaningAction != null)
             {
-                IEnumerable<string> directories = TraverseAndInvoke(_maintenanceItemInstance.Path);
-                foreach (string directory in directories)
-                {
-                    directoriesToBeVisited.Enqueue(directory);
-                }
+                Queue<string> directoriesToBeVisited = new Queue<string>();
+                ICollection<FileInfo> fileInfos = new Collection<FileInfo>();
+
+                PopulateDirectoriesAndFileInfos(_maintenanceItemInstance.Path, directoriesToBeVisited, fileInfos);
 
                 while (directoriesToBeVisited.Count != 0)
                 {
-                    IEnumerable<string> subdirectories = TraverseAndInvoke(directoriesToBeVisited.Dequeue());
-                    foreach (string subdirectory in subdirectories)
+                    PopulateDirectoriesAndFileInfos(directoriesToBeVisited.Dequeue(), directoriesToBeVisited, fileInfos);
+                }
+
+                fileInfos = fileInfos.ToList();
+                IBackupable backupableLog = _maintenanceItemInstance as IBackupable;
+
+                if (backupableLog != null && _backupAction != null && fileInfos.Any())
+                {
+                    DateTime dateStart = fileInfos.Min(x => x.LastWriteTimeUtc);
+                    DateTime dateEnd = fileInfos.Max(x => x.LastWriteTimeUtc);
+
+                    DirectoryInfo di = Directory.CreateDirectory(Path.Combine(_maintenanceItemInstance.Path, string.Format("{0:yy-MM-dd}_{1:yy-MM-dd}", dateStart, dateEnd)));
+
+                    foreach (FileInfo fileInfo in fileInfos)
                     {
-                        directoriesToBeVisited.Enqueue(subdirectory);
+                        string fileSubdirectoryPath = fileInfo.FullName.Replace(_maintenanceItemInstance.Path + "\\", "");
+
+                        FileInfo newPath = new FileInfo(Path.Combine(di.FullName, fileSubdirectoryPath));
+                        if (newPath.Directory != null && !newPath.Directory.Exists) newPath.Directory.Create();
+                        File.Copy(fileInfo.FullName, newPath.FullName);
+                        _cleaningAction.Invoke(fileInfo.FullName);
+                    }
+
+                    foreach (var backupFile in backupableLog.Backups)
+                    {
+                        _backupAction.Invoke(di.FullName, Path.Combine(backupFile.Path, di.Name) + ".zip");
+                    }
+                }
+                else if (_cleaningAction != null)
+                {
+                    foreach (FileInfo fileInfo in fileInfos)
+                    {
+                        _cleaningAction.Invoke(fileInfo.FullName);
                     }
                 }
             }
@@ -98,54 +124,22 @@ namespace FileMaintenance.Core.Models
             }
         }
 
+        private void PopulateDirectoriesAndFileInfos(string directoryToBeVisited, Queue<string> directoriesToBeVisited, ICollection<FileInfo> fileInfos)
+        {
+            foreach (string directory in IoHelper.GetDirectories(directoryToBeVisited, _fileFilters))
+            {
+                directoriesToBeVisited.Enqueue(directory);
+            }
+
+            foreach (FileInfo fileInfo in IoHelper.GetFileInfos(directoryToBeVisited, _fileFilters))
+            {
+                fileInfos.Add(fileInfo);
+            }
+        }
+
         #endregion
 
         #region private methods
-
-        /// <summary>
-        /// Traverses the given directory path and invokes the actions specified on a filtered set of files.
-        /// </summary>
-        /// <param name="directoryPath"></param>
-        /// <returns></returns>
-        private IEnumerable<string> TraverseAndInvoke(string directoryPath)
-        {
-            IEnumerable<FileInfo> fileInfos;
-            string[] subdirectories;
-            IoHelper.GetFilesAndFolders(directoryPath, _fileFilters , out fileInfos, out subdirectories);
-
-            fileInfos = fileInfos.ToList();
-            IBackupable backupableLog = _maintenanceItemInstance as IBackupable;
-
-            if (backupableLog != null && fileInfos.Any())
-            {
-                DateTime dateStart = fileInfos.Min(x => x.LastWriteTimeUtc);
-                DateTime dateEnd = fileInfos.Max(x => x.LastWriteTimeUtc);
-
-                DirectoryInfo di = Directory.CreateDirectory(Path.Combine(directoryPath, string.Format("{0:yy-MM-dd}_{1:yy-MM-dd}", dateStart, dateEnd)));
-
-                foreach (FileInfo fileInfo in fileInfos)
-                {
-                    File.Copy(fileInfo.FullName, Path.Combine(di.FullName, fileInfo.Name));
-                    _cleaningAction.Invoke(fileInfo.FullName);
-                }
-
-                string subdirectoryPath = di.FullName.Replace(_maintenanceItemInstance.Path + "\\", "");
-
-                foreach (var backupFile in backupableLog.Backups)
-                {
-                    _backupAction.Invoke(di.FullName, Path.Combine(backupFile.Path, subdirectoryPath) + ".zip");
-                }
-            }
-            else
-            {
-                foreach (FileInfo fileInfo in fileInfos)
-                {
-                    _cleaningAction.Invoke(fileInfo.FullName);
-                }
-            }
-
-            return subdirectories.ToList();
-        }
 
         #endregion
 

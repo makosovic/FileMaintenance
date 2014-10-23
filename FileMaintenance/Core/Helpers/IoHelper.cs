@@ -11,24 +11,31 @@ namespace FileMaintenance.Core.Helpers
     public class IoHelper
     {
         /// <summary>
-        /// Traverses a directory with a given filter for files and populates two collections (FileInfos and subdirectories).
+        /// Traverses a directory with a given filter for files and returns FileInfo collection.
         /// </summary>
         /// <param name="directoryPath"></param>
         /// <param name="fileFilters"></param>
-        /// <param name="fileInfoCollection"></param>
-        /// <param name="subdirectories"></param>
-        public static void GetFilesAndFolders(string directoryPath
-            , IEnumerable<Func<FileInfo, bool>> fileFilters
-            , out IEnumerable<FileInfo> fileInfos
-            , out string[] subdirectories)
+        public static IEnumerable<FileInfo> GetFileInfos(string directoryPath, IEnumerable<Func<FileInfo, bool>> fileFilters)
         {
             string[] files = Directory.GetFiles(directoryPath);
-            fileInfos = files.Select(x => new FileInfo(x));
+            IEnumerable<FileInfo> fileInfos = files.Select(x => new FileInfo(x));
 
             foreach (var expression in fileFilters)
                 fileInfos = fileInfos.Where(expression);
 
-            subdirectories = Directory.GetDirectories(directoryPath);
+            return fileInfos;
+        }
+
+        /// <summary>
+        /// Traverses a directory with a given filter for files and returns a collection of directory paths.
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <param name="fileFilters"></param>
+        public static IEnumerable<string> GetDirectories(string directoryPath, IEnumerable<Func<FileInfo, bool>> fileFilters)
+        {
+            IEnumerable<string> subdirectories = Directory.GetDirectories(directoryPath);
+
+            return subdirectories;
         }
 
         /// <summary>
