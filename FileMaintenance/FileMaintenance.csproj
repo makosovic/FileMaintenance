@@ -60,14 +60,14 @@
     <Compile Include="Core\Helpers\ConfigurationHelper.cs" />
     <Compile Include="Core\Helpers\IoHelper.cs" />
     <Compile Include="Core\Helpers\MailMessageHelper.cs" />
-    <Compile Include="Core\Models\MaintenanceSummary\FileMaintenanceBuilder.cs" />
+    <Compile Include="Core\IMaintenanceManager.cs" />
+    <Compile Include="Core\MaintenanceManager.cs" />
     <Compile Include="Core\Models\MaintenanceSummary\MaintenanceDiscSummary.cs" />
     <Compile Include="Core\Models\MaintenanceSummary\MaintenanceSummary.cs" />
     <Compile Include="Core\Models\MaintenanceItem\MaintenanceItemBackup.cs" />
     <Compile Include="Core\Models\MaintenanceItem\BaseMaintenanceItem.cs" />
     <Compile Include="Core\Models\MaintenanceItem\MaintenanceItem.cs" />
     <Compile Include="Core\Models\IBackupable.cs" />
-    <Compile Include="Core\Models\IFileMaintenanceBuilder.cs" />
     <Compile Include="Core\Models\IMaintenanceDiscSummary.cs" />
     <Compile Include="Core\Models\IMaintenanceSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="Services\IMailServiceConfig.cs" />
     <Compile Include="Services\IMaintenanceService.cs" />
-    <Compile Include="Services\IMaintenanceServiceAction.cs" />
     <Compile Include="Services\IMaintenanceServiceConfig.cs" />
     <Compile Include="Services\Implementations\MailService.cs" />
     <Compile Include="Services\Implementations\MailServiceConfig.cs" />

@@ -4,12 +4,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using FileMaintenance.Core;
 using FileMaintenance.Core.Models;
 using FileMaintenance.Properties;
 
 namespace FileMaintenance.Services
 {
-    public class MaintenanceService : IMaintenanceService, IMaintenanceServiceAction
+    public class MaintenanceService : IMaintenanceService
     {
 
         #region private fields
@@ -64,52 +65,6 @@ namespace FileMaintenance.Services
 
         #region public methods
 
-        public void Backup(string sourcePath, string targetFilePath)
-        {
-            FileInfo sourceFi = new FileInfo(sourcePath);
-            FileInfo targetFi = new FileInfo(targetFilePath);
-
-            if (!string.Equals(targetFi.Extension, ".zip", StringComparison.InvariantCultureIgnoreCase))
-            {
-                throw new ArgumentException("targetPath");
-            }
-
-            if (targetFi.Exists)
-            {
-                throw new Exception("Target path already exists.");
-            }
-
-            if (targetFi.DirectoryName != null)
-            {
-                if (!Directory.Exists(targetFi.DirectoryName))
-                {
-                    Directory.CreateDirectory(targetFi.DirectoryName);
-                }
-            }
-
-            if ((sourceFi.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-
-                ZipFile.CreateFromDirectory(sourcePath, targetFilePath);
-                Directory.Delete(sourcePath, true);
-            }
-            else
-            {
-                using (var zip = ZipFile.Open(targetFilePath, ZipArchiveMode.Create))
-                {
-                    zip.CreateEntryFromFile(sourceFi.FullName, sourceFi.Name);
-                }
-
-                File.Delete(sourcePath);
-            }
-        }
-
-        public void Delete(string path)
-        {
-            File.Delete(path);
-            _maintenanceSummary.IncrementDeletedFileCount(path);
-        }
-
         public void Start()
         {
             _maintenanceSummary.ExecutionStartTimeUtc = DateTime.UtcNow;
@@ -118,7 +73,8 @@ namespace FileMaintenance.Services
             {
                 if (Directory.Exists(item.Path))
                 {
-                    item.ExecuteMaintenance(this);
+                    IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary, item.Path);
+                    item.ExecuteMaintenance(maintenanceManager);
                 }
                 else if ((item as IBackupable) != null)
                 {

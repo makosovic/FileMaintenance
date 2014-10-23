@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using FileMaintenance.Services;
 
 namespace FileMaintenance.Core.Models
 {
@@ -21,6 +20,7 @@ namespace FileMaintenance.Core.Models
         {
             get { return _backups != null && _backups.Any(); }
         }
+
         public IReadOnlyCollection<MaintenanceItemBackup> Backups
         {
             get { return new ReadOnlyCollection<MaintenanceItemBackup>(_backups); }
@@ -47,19 +47,24 @@ namespace FileMaintenance.Core.Models
 
         #region public methods
 
-        public override void ExecuteMaintenance(IMaintenanceServiceAction maintenanceService)
+        public override void ExecuteMaintenance(IMaintenanceManager maintenanceManager)
         {
-            if (IsBackedUp)
+            maintenanceManager.AddCondition(file => DateTime.UtcNow.Subtract(this.KeepFor) > file.LastWriteTimeUtc);
+
+            if (maintenanceManager.Files.Any())
             {
-                this.CreateMaintenance()
-                    .Where(file => DateTime.UtcNow.Subtract(this.KeepFor) > file.LastWriteTimeUtc)
-                    .Backup((sourceDirectoryPath, backupDirectoryPath) => maintenanceService.Backup(sourceDirectoryPath, backupDirectoryPath))
-                    .Delete(filePath => maintenanceService.Delete(filePath))
-                    .Execute();
-            }
-            else
-            {
-                base.ExecuteMaintenance(maintenanceService);
+                string dummyFullPath = maintenanceManager.GroupFilesToDirectory();
+                string dummyRelativePath = dummyFullPath.Replace(Path + "\\", "");
+
+                foreach (MaintenanceItemBackup backup in Backups)
+                {
+                    maintenanceManager.Backup(dummyFullPath, System.IO.Path.Combine(backup.Path, dummyRelativePath) + ".zip");
+                }
+
+                foreach (string file in maintenanceManager.Files)
+                {
+                    maintenanceManager.Delete(file);
+                }
             }
         }
 
