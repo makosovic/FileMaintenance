@@ -12,7 +12,7 @@ namespace FileMaintenance.Services
     {
         #region private fields
 
-        private readonly ICollection<BaseFolder> _folders; 
+        private readonly ICollection<BaseMaintenanceItem> _maintenanceItems; 
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace FileMaintenance.Services
         public bool AlertLowDisk { get; private set; }
         public bool AlertSummary { get; private set; }
 
-        public IEnumerable<BaseFolder> Folders { get { return _folders.AsEnumerable(); } }
+        public IEnumerable<BaseMaintenanceItem> MaintenanceItems { get { return _maintenanceItems.AsEnumerable(); } }
 
         #endregion
 
@@ -29,16 +29,16 @@ namespace FileMaintenance.Services
 
         public MaintenanceServiceConfig()
         {
-            _folders = new List<BaseFolder>();
+            _maintenanceItems = new List<BaseMaintenanceItem>();
 
-            InitFoldersFromConfig();
+            InitItemsFromConfig();
         }
 
         #endregion
 
         #region private methods
 
-        private void InitFoldersFromConfig()
+        private void InitItemsFromConfig()
         {
             var config = ConfigurationManager.GetSection("fileMaintenance") as FileMaintenanceConfigSection;
 
@@ -46,44 +46,44 @@ namespace FileMaintenance.Services
                 throw new ArgumentNullException("fileMaintenance");
 
             AlertSummary = config.Summary;
-            FolderConfigElementCollection folders = config.Folders;
+            MaintenanceItemConfigElementCollection maintenanceItems = config.MaintenanceItems;
             AlertConfigElementCollection alerts = config.Alerts;
 
 
-            if (folders == null)
-                throw new ArgumentNullException("folders");
+            if (maintenanceItems == null)
+                throw new ArgumentNullException("items");
 
-            if (folders.Count == 0)
-                throw new ArgumentOutOfRangeException("folders");
+            if (maintenanceItems.Count == 0)
+                throw new ArgumentOutOfRangeException("items");
 
-            foreach (FolderConfigElement folder in folders)
+            foreach (MaintenanceItemConfigElement item in maintenanceItems)
             {
                 int days, hours, minutes;
-                if (!ConfigurationHelper.TryParseKeepFor(folder.KeepFor, out days, out hours, out minutes))
+                if (!ConfigurationHelper.TryParseKeepFor(item.KeepFor, out days, out hours, out minutes))
                     throw new ArgumentOutOfRangeException("keepFor");
 
-                Folder folderItem = new Folder(folder.Path, new TimeSpan(days, hours, minutes, 0));
-                BackupFolderConfigElementCollection backups = folder.Backups;
+                MaintenanceItem tmpMaintenanceItem = new MaintenanceItem(item.Path, new TimeSpan(days, hours, minutes, 0));
+                MaintenanceItemBackupConfigElementCollection maintenanceItemBackups = item.Backups;
 
-                if (backups == null)
+                if (maintenanceItemBackups == null)
                     throw new ArgumentNullException("backups");
 
-                if (backups.Count == 0)
+                if (maintenanceItemBackups.Count == 0)
                     throw new ArgumentOutOfRangeException("backups");
 
-                foreach (BackupFolderConfigElement backup in backups)
+                foreach (MaintenanceItemBackupConfigElement backup in maintenanceItemBackups)
                 {
                     int bDays, bHours, bMinutes;
-                    if (!ConfigurationHelper.TryParseKeepFor(folder.KeepFor, out bDays, out bHours, out bMinutes))
+                    if (!ConfigurationHelper.TryParseKeepFor(item.KeepFor, out bDays, out bHours, out bMinutes))
                         throw new ArgumentOutOfRangeException("keepFor");
 
-                    BackupFolder backupFolderItem = new BackupFolder(backup.Path, new TimeSpan(bDays, bHours, bMinutes, 0));
-                    folderItem.AddBackup(backupFolderItem);
-                    _folders.Add(backupFolderItem);
+                    MaintenanceItemBackup tmpMaintenanceItemBackup = new MaintenanceItemBackup(backup.Path, new TimeSpan(bDays, bHours, bMinutes, 0));
+                    tmpMaintenanceItem.AddBackup(tmpMaintenanceItemBackup);
+                    _maintenanceItems.Add(tmpMaintenanceItemBackup);
 
                 }
 
-                _folders.Add(folderItem);
+                _maintenanceItems.Add(tmpMaintenanceItem);
             }
 
             if (alerts != null)

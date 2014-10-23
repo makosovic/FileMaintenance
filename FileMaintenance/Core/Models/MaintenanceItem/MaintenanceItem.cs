@@ -6,12 +6,12 @@ using FileMaintenance.Services;
 
 namespace FileMaintenance.Core.Models
 {
-    public class Folder : BaseFolder, IBackupable
+    public class MaintenanceItem : BaseMaintenanceItem, IBackupable
     {
 
         #region private fields
 
-        private readonly IList<BackupFolder> _backups;
+        private readonly IList<MaintenanceItemBackup> _backups;
 
         #endregion
 
@@ -21,25 +21,25 @@ namespace FileMaintenance.Core.Models
         {
             get { return _backups != null && _backups.Any(); }
         }
-        public IReadOnlyCollection<BackupFolder> Backups
+        public IReadOnlyCollection<MaintenanceItemBackup> Backups
         {
-            get { return new ReadOnlyCollection<BackupFolder>(_backups); }
+            get { return new ReadOnlyCollection<MaintenanceItemBackup>(_backups); }
         }
 
         #endregion
 
         #region constructors
 
-        public Folder(string path, TimeSpan keepFor)
+        public MaintenanceItem(string path, TimeSpan keepFor)
             : base(path, keepFor)
         {
-            _backups = new List<BackupFolder>();
+            _backups = new List<MaintenanceItemBackup>();
         }
 
-        public Folder(string path, TimeSpan keepFor, BackupFolder backup)
+        public MaintenanceItem(string path, TimeSpan keepFor, MaintenanceItemBackup backup)
             : base(path, keepFor)
         {
-            _backups = new List<BackupFolder>();
+            _backups = new List<MaintenanceItemBackup>();
             _backups.Add(backup);
         }
 
@@ -63,14 +63,14 @@ namespace FileMaintenance.Core.Models
             }
         }
 
-        public void AddBackup(BackupFolder backupFolder)
+        public void AddBackup(MaintenanceItemBackup maintenanceItemBackup)
         {
-            this._backups.Add(backupFolder);
+            this._backups.Add(maintenanceItemBackup);
         }
 
         public void AddBackup(string path, TimeSpan keepFor)
         {
-            this._backups.Add(new BackupFolder(path, keepFor));
+            this._backups.Add(new MaintenanceItemBackup(path, keepFor));
         }
 
         #endregion

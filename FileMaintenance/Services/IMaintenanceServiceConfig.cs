@@ -7,6 +7,6 @@ namespace FileMaintenance.Services
     {
         bool AlertLowDisk { get; }
         bool AlertSummary { get; }
-        IEnumerable<BaseFolder> Folders { get; }
+        IEnumerable<BaseMaintenanceItem> MaintenanceItems { get; }
     }
 }

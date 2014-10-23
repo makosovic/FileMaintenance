@@ -3,9 +3,9 @@
 namespace FileMaintenance.Configuration
 {
     /// <summary>
-    /// Abstract class for FolderElement in custom config section FileMaintenance
+    /// Abstract class for MaintenanceItemElement in custom config section FileMaintenance
     /// </summary>
-    public abstract class BaseFolderConfigElement : ConfigurationElement
+    public abstract class BaseMaintenanceItemConfigElement : ConfigurationElement
     {
         /// <summary>
         /// Gets or sets Name property

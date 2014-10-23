@@ -31,7 +31,7 @@ namespace FileMaintenance.Services
 
             _notificationServices = notificationServicesCollection;
             _maintenanceServiceConfig = new MaintenanceServiceConfig();
-            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.Folders.Select(x => x.Path));
+            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
         public MaintenanceService(IMaintenanceServiceConfig maintenanceServiceConfig)
@@ -43,21 +43,21 @@ namespace FileMaintenance.Services
 
             _notificationServices = notificationServicesCollection;
             _maintenanceServiceConfig = maintenanceServiceConfig;
-            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.Folders.Select(x => x.Path));
+            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
         public MaintenanceService(IEnumerable<INotificationService> notificationServices)
         {
             _notificationServices = notificationServices;
             _maintenanceServiceConfig = new MaintenanceServiceConfig();
-            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.Folders.Select(x => x.Path));
+            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
         public MaintenanceService(IEnumerable<INotificationService> notificationServices, IMaintenanceServiceConfig maintenanceServiceConfig)
         {
             _notificationServices = notificationServices;
             _maintenanceServiceConfig = maintenanceServiceConfig;
-            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.Folders.Select(x => x.Path));
+            _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
         #endregion
@@ -114,13 +114,13 @@ namespace FileMaintenance.Services
         {
             _maintenanceSummary.ExecutionStartTimeUtc = DateTime.UtcNow;
 
-            foreach (BaseFolder folder in _maintenanceServiceConfig.Folders)
+            foreach (BaseMaintenanceItem item in _maintenanceServiceConfig.MaintenanceItems)
             {
-                if (Directory.Exists(folder.Path))
+                if (Directory.Exists(item.Path))
                 {
-                    folder.ExecuteMaintenance(this);
+                    item.ExecuteMaintenance(this);
                 }
-                else if ((folder as IBackupable) != null)
+                else if ((item as IBackupable) != null)
                 {
                     throw new ApplicationException("Invalid backup path");
                 }

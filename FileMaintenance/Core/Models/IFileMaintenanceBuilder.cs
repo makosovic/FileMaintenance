@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FileMaintenance.Core.Models
 {
-    public interface IFileMaintenanceBuilder<out T> where T : BaseFolder
+    public interface IFileMaintenanceBuilder<out T> where T : BaseMaintenanceItem
     {
         IFileMaintenanceBuilder<T> Where(Func<FileInfo, bool> expression);
         IFileMaintenanceBuilder<T> Delete(Action<string> action);

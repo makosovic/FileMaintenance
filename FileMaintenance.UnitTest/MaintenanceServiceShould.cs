@@ -41,8 +41,8 @@ namespace FileMaintenance.UnitTest
             var stubMailService = MockRepository.GenerateStub<INotificationService>();
             stubNotificationServices.Add(stubMailService);
 
-            var folders = new List<BaseFolder>();
-            stubMainenanceServiceConfig.Stub(x => x.Folders).Return(folders);
+            var items = new List<BaseMaintenanceItem>();
+            stubMainenanceServiceConfig.Stub(x => x.MaintenanceItems).Return(items);
 
             var maintenanceService = new MaintenanceService(stubNotificationServices, stubMainenanceServiceConfig);
 
@@ -78,8 +78,8 @@ namespace FileMaintenance.UnitTest
             var stubMailService = MockRepository.GenerateStub<INotificationService>();
             stubNotificationServices.Add(stubMailService);
 
-            var folders = new List<BaseFolder>();
-            stubMainenanceServiceConfig.Stub(x => x.Folders).Return(folders);
+            var items = new List<BaseMaintenanceItem>();
+            stubMainenanceServiceConfig.Stub(x => x.MaintenanceItems).Return(items);
 
             var maintenanceService = new MaintenanceService(stubNotificationServices, stubMainenanceServiceConfig);
 

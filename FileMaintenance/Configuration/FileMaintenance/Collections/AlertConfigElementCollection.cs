@@ -3,13 +3,13 @@
 namespace FileMaintenance.Configuration
 {
     /// <summary>
-    /// Implementation of BackupFolderConfigElementCollection in custom config section FileMaintenance
+    /// Implementation of AlertConfigElementCollection in custom config section FileMaintenance
     /// </summary>
     [ConfigurationCollection(typeof(AlertConfigElement), CollectionType = ConfigurationElementCollectionType.BasicMap)]
     public class AlertConfigElementCollection : ConfigurationElementCollection
     {
         /// <summary>
-        /// Gets a BackupFolderConfigElement by Name
+        /// Gets a AlertConfigElement by Name
         /// </summary>
         public AlertConfigElement this[string name]
         {
@@ -17,7 +17,7 @@ namespace FileMaintenance.Configuration
         }
 
         /// <summary>
-        /// Gets a BackupFolderConfigElement by Index
+        /// Gets a AlertConfigElement by Index
         /// </summary>
         public AlertConfigElement this[int index]
         {
@@ -25,7 +25,7 @@ namespace FileMaintenance.Configuration
         }
 
         /// <summary>
-        /// Creates new BackupFolderConfigElement
+        /// Creates new AlertConfigElement
         /// </summary>
         protected override ConfigurationElement CreateNewElement()
         {
@@ -33,7 +33,7 @@ namespace FileMaintenance.Configuration
         }
 
         /// <summary>
-        /// Gets the key of a single BackupFolderConfigElement
+        /// Gets the key of a single AlertConfigElement
         /// </summary>
         protected override object GetElementKey(ConfigurationElement element)
         {

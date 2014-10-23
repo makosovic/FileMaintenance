@@ -15,10 +15,10 @@
   <xs:element name="fileMaintenance">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="folder" maxOccurs="unbounded">
+        <xs:element name="item" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="backups">
+              <xs:element name="MaintenanceItemBackups">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="add">

@@ -7,12 +7,12 @@ using FileMaintenance.Core.Helpers;
 
 namespace FileMaintenance.Core.Models
 {
-    public class FileMaintenanceBuilder<T> : IFileMaintenanceBuilder<T> where T : BaseFolder
+    public class FileMaintenanceBuilder<T> : IFileMaintenanceBuilder<T> where T : BaseMaintenanceItem
     {
 
         #region private fields
 
-        private readonly T _folderInstance;
+        private readonly T _maintenanceItemInstance;
         private Action<string> _cleaningAction;
         private Action<string, string> _backupAction;
         private readonly ICollection<Func<FileInfo, bool>> _fileFilters;
@@ -22,12 +22,12 @@ namespace FileMaintenance.Core.Models
         #region constructors
 
         /// <summary>
-        /// Initializes the new instance of a FileMaintenanceBuilder class with a specified Folder instance.
+        /// Initializes the new instance of a FileMaintenanceBuilder class with a specified MaintenanceItem instance.
         /// </summary>
-        /// <param name="folderInstance"></param>
-        public FileMaintenanceBuilder(T folderInstance)
+        /// <param name="maintenanceItemInstance"></param>
+        public FileMaintenanceBuilder(T maintenanceItemInstance)
         {
-            _folderInstance = folderInstance;
+            _maintenanceItemInstance = maintenanceItemInstance;
             _fileFilters = new Collection<Func<FileInfo, bool>>();
         }
         
@@ -77,7 +77,7 @@ namespace FileMaintenance.Core.Models
 
             if (_backupAction != null || _cleaningAction != null)
             {
-                IEnumerable<string> directories = TraverseAndInvoke(_folderInstance.Path);
+                IEnumerable<string> directories = TraverseAndInvoke(_maintenanceItemInstance.Path);
                 foreach (string directory in directories)
                 {
                     directoriesToBeVisited.Enqueue(directory);
@@ -114,7 +114,7 @@ namespace FileMaintenance.Core.Models
             IoHelper.GetFilesAndFolders(directoryPath, _fileFilters , out fileInfos, out subdirectories);
 
             fileInfos = fileInfos.ToList();
-            IBackupable backupableLog = _folderInstance as IBackupable;
+            IBackupable backupableLog = _maintenanceItemInstance as IBackupable;
 
             if (backupableLog != null && fileInfos.Any())
             {
@@ -129,7 +129,7 @@ namespace FileMaintenance.Core.Models
                     _cleaningAction.Invoke(fileInfo.FullName);
                 }
 
-                string subdirectoryPath = di.FullName.Replace(_folderInstance.Path + "\\", "");
+                string subdirectoryPath = di.FullName.Replace(_maintenanceItemInstance.Path + "\\", "");
 
                 foreach (var backupFile in backupableLog.Backups)
                 {

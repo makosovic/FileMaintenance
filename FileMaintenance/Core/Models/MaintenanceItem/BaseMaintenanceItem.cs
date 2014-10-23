@@ -3,7 +3,7 @@ using FileMaintenance.Services;
 
 namespace FileMaintenance.Core.Models
 {
-    public abstract class BaseFolder
+    public abstract class BaseMaintenanceItem
     {
 
         #region properties
@@ -16,7 +16,7 @@ namespace FileMaintenance.Core.Models
 
         #region constructors
 
-        protected BaseFolder(string path, TimeSpan keepFor)
+        protected BaseMaintenanceItem(string path, TimeSpan keepFor)
         {
             Path = path;
             KeepFor = keepFor;
@@ -26,9 +26,9 @@ namespace FileMaintenance.Core.Models
 
         #region public methods
 
-        public IFileMaintenanceBuilder<BaseFolder> CreateMaintenance()
+        public IFileMaintenanceBuilder<BaseMaintenanceItem> CreateMaintenance()
         {
-            return new FileMaintenanceBuilder<BaseFolder>(this);
+            return new FileMaintenanceBuilder<BaseMaintenanceItem>(this);
         }
 
         public virtual void ExecuteMaintenance(IMaintenanceServiceAction maintenanceService)

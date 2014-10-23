@@ -5,7 +5,7 @@ namespace FileMaintenance.Core.Models
 {
     public interface IMaintenanceSummary
     {
-        int FolderCount { get; }
+        int MaintenanceItemCount { get; }
         bool? IsAnyDiskLow { get; }
         IEnumerable<IMaintenanceDiskSummary> MaintenanceDiskSummaries { get; }
         TimeSpan Duration { get; }

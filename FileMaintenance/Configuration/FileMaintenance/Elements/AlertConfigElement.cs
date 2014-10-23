@@ -3,7 +3,7 @@
 namespace FileMaintenance.Configuration
 {
     /// <summary>
-    /// Implementation of BackupFolderConfigElement in custom config section FileMaintenance
+    /// Implementation of MaintenanceItemBackupConfigElement in custom config section FileMaintenance
     /// </summary>
     public class AlertConfigElement : ConfigurationElement
     {

@@ -8,12 +8,12 @@ namespace FileMaintenance.Configuration
     public class FileMaintenanceConfigSection : ConfigurationSection
     {
         /// <summary>
-        /// Gets a collection of FolderConfigElement
+        /// Gets a collection of MaintenanceItemConfigElement
         /// </summary>
         [ConfigurationProperty("", IsDefaultCollection = true)]
-        public FolderConfigElementCollection Folders
+        public MaintenanceItemConfigElementCollection MaintenanceItems
         {
-            get { return (FolderConfigElementCollection)this[""]; }
+            get { return (MaintenanceItemConfigElementCollection)this[""]; }
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace FileMaintenance.Configuration
         }
 
         /// <summary>
-        /// Gets a collection of BackupFolderConfigElement
+        /// Gets a collection of MaintenanceItemBackupConfigElement
         /// </summary>
         [ConfigurationProperty("alerts", IsDefaultCollection = false)]
         public AlertConfigElementCollection Alerts

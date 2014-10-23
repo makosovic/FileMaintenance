@@ -11,7 +11,7 @@ namespace FileMaintenance.Core.Models
         #region private fields
 
         private readonly IDictionary<string, IMaintenanceDiskSummary> _maintenanceDiskSummaries;
-        private readonly int _folderCount;
+        private readonly int _maintenanceItemCount;
         private bool? _anyDiskLow;
 
         #endregion
@@ -19,9 +19,9 @@ namespace FileMaintenance.Core.Models
         #region properties
 
         /// <summary>
-        /// Gets the number of folders that are being maintained
+        /// Gets the number of maintenanceItems that are being maintained
         /// </summary>
-        public int FolderCount { get { return _folderCount; } }
+        public int MaintenanceItemCount { get { return _maintenanceItemCount; } }
 
         /// <summary>
         /// Gets wheather any of the disks maintained are low
@@ -84,15 +84,15 @@ namespace FileMaintenance.Core.Models
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="folderPaths"></param>
-        public MaintenanceSummary(IEnumerable<string> folderPaths)
+        /// <param name="maintenanceItemPaths"></param>
+        public MaintenanceSummary(IEnumerable<string> maintenanceItemPaths)
         {
-            _folderCount = 0;
+            _maintenanceItemCount = 0;
             _maintenanceDiskSummaries = new Dictionary<string, IMaintenanceDiskSummary>();
-            foreach (var folderPath in folderPaths)
+            foreach (var maintenanceItemPath in maintenanceItemPaths)
             {
-                this._folderCount++;
-                this.TryAddDisk(IoHelper.GetDiskName(folderPath));
+                this._maintenanceItemCount++;
+                this.TryAddDisk(IoHelper.GetDiskName(maintenanceItemPath));
             }
         }
 
@@ -117,7 +117,7 @@ namespace FileMaintenance.Core.Models
             builder.AppendLine(string.Format("Time started: {0:F} UTC", this.ExecutionStartTimeUtc));
             builder.AppendLine(string.Format("Time ended: {0:F} UTC", this.ExecutionEndTimeUtc));
             builder.AppendLine();
-            builder.AppendLine(string.Format("Total folders maintained: {0}", this.FolderCount));
+            builder.AppendLine(string.Format("Total items maintained: {0}", this.MaintenanceItemCount));
             builder.AppendLine();
             builder.AppendLine();
             builder.AppendLine("Disks affected:");

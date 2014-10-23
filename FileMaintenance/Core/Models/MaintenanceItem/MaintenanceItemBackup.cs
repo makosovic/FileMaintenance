@@ -2,12 +2,12 @@
 
 namespace FileMaintenance.Core.Models
 {
-    public class BackupFolder : BaseFolder
+    public class MaintenanceItemBackup : BaseMaintenanceItem
     {
 
         #region constructors
 
-        public BackupFolder(string path, TimeSpan keepFor) 
+        public MaintenanceItemBackup(string path, TimeSpan keepFor) 
             : base(path, keepFor)
         {
         }

@@ -44,13 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\FileMaintenance\Base\BaseFolderConfigElement.cs" />
+    <Compile Include="Configuration\FileMaintenance\Base\BaseMaintenanceItemConfigElement.cs" />
     <Compile Include="Configuration\FileMaintenance\Collections\AlertConfigElementCollection.cs" />
-    <Compile Include="Configuration\FileMaintenance\Collections\BackupFolderConfigElementCollection.cs" />
-    <Compile Include="Configuration\FileMaintenance\Collections\FolderConfigElementCollection.cs" />
+    <Compile Include="Configuration\FileMaintenance\Collections\MaintenanceItemConfigElementCollection.cs" />
+    <Compile Include="Configuration\FileMaintenance\Collections\MaintenanceItemBackupConfigElementCollection.cs" />
     <Compile Include="Configuration\FileMaintenance\Elements\AlertConfigElement.cs" />
-    <Compile Include="Configuration\FileMaintenance\Elements\BackupFolderConfigElement.cs" />
-    <Compile Include="Configuration\FileMaintenance\Elements\FolderConfigElement.cs" />
+    <Compile Include="Configuration\FileMaintenance\Elements\MaintenanceItemBackupConfigElement.cs" />
+    <Compile Include="Configuration\FileMaintenance\Elements\MaintenanceItemConfigElement.cs" />
     <Compile Include="Configuration\FileMaintenance\FileMaintenanceConfigSection.cs" />
     <Compile Include="Configuration\MailSettings\Collections\EmailConfigElementCollection.cs" />
     <Compile Include="Configuration\MailSettings\Elements\CredentialsConfigElement.cs" />
@@ -60,12 +60,12 @@
     <Compile Include="Core\Helpers\ConfigurationHelper.cs" />
     <Compile Include="Core\Helpers\IoHelper.cs" />
     <Compile Include="Core\Helpers\MailMessageHelper.cs" />
-    <Compile Include="Core\Models\FileMaintenance\FileMaintenanceBuilder.cs" />
-    <Compile Include="Core\Models\FileMaintenance\MaintenanceDiscSummary.cs" />
-    <Compile Include="Core\Models\FileMaintenance\MaintenanceSummary.cs" />
-    <Compile Include="Core\Models\Folder\BackupFolder.cs" />
-    <Compile Include="Core\Models\Folder\BaseFolder.cs" />
-    <Compile Include="Core\Models\Folder\Folder.cs" />
+    <Compile Include="Core\Models\MaintenanceSummary\FileMaintenanceBuilder.cs" />
+    <Compile Include="Core\Models\MaintenanceSummary\MaintenanceDiscSummary.cs" />
+    <Compile Include="Core\Models\MaintenanceSummary\MaintenanceSummary.cs" />
+    <Compile Include="Core\Models\MaintenanceItem\MaintenanceItemBackup.cs" />
+    <Compile Include="Core\Models\MaintenanceItem\BaseMaintenanceItem.cs" />
+    <Compile Include="Core\Models\MaintenanceItem\MaintenanceItem.cs" />
     <Compile Include="Core\Models\IBackupable.cs" />
     <Compile Include="Core\Models\IFileMaintenanceBuilder.cs" />
     <Compile Include="Core\Models\IMaintenanceDiscSummary.cs" />

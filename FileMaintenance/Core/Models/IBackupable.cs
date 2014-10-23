@@ -5,11 +5,11 @@ namespace FileMaintenance.Core.Models
 {
     public interface IBackupable
     {
-        IReadOnlyCollection<BackupFolder> Backups { get; }
+        IReadOnlyCollection<MaintenanceItemBackup> Backups { get; }
         bool IsBackedUp { get; }
         string Path { get; }
 
-        void AddBackup(BackupFolder backupFolder);
+        void AddBackup(MaintenanceItemBackup maintenanceItemBackup);
         void AddBackup(string path, TimeSpan keepFor);
     }
 }
