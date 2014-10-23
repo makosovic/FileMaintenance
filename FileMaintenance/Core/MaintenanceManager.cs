@@ -73,7 +73,17 @@ namespace FileMaintenance.Core
         {
             File.Delete(path);
             _maintenanceSummary.IncrementDeletedFileCount(path);
-        } 
+        }
+
+        public IEnumerable<string> Traverse(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCondition(Func<FileInfo, bool> expression)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

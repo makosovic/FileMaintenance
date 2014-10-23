@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FileMaintenance.Services;
 
 namespace FileMaintenance.Core.Models
@@ -20,9 +21,9 @@ namespace FileMaintenance.Core.Models
         public override void ExecuteMaintenance(IMaintenanceManager maintenanceManager)
         {
             maintenanceManager.AddCondition(file => DateTime.UtcNow.Subtract(this.KeepFor) > file.LastWriteTimeUtc);
-            string[] files = maintenanceManager.Traverse(Path);
+            IEnumerable<string> files = maintenanceManager.Traverse(Path);
 
-            foreach (var file in files)
+            foreach (string file in files)
             {
                 maintenanceManager.Delete(file);
             }

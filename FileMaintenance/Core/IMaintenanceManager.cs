@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 
 namespace FileMaintenance.Core
@@ -10,5 +11,6 @@ namespace FileMaintenance.Core
         void Delete(string path);
 
         IEnumerable<string> Traverse(string path);
+        void AddCondition(Func<FileInfo, bool> expression);
     }
 }
