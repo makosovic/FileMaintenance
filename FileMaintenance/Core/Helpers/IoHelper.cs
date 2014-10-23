@@ -20,7 +20,7 @@ namespace FileMaintenance.Core.Helpers
             string[] files = Directory.GetFiles(directoryPath);
             IEnumerable<FileInfo> fileInfos = files.Select(x => new FileInfo(x));
 
-            foreach (var expression in fileFilters)
+            foreach (Func<FileInfo, bool> expression in fileFilters)
                 fileInfos = fileInfos.Where(expression);
 
             return fileInfos;

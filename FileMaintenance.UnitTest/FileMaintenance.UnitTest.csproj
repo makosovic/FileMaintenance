@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationHelperShould.cs" />
     <Compile Include="MailMessageHelperShould.cs" />
-    <Compile Include="MaintenanceServiceShould.cs" />
+    <Compile Include="MaintenanceManagerShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

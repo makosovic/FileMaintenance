@@ -12,6 +12,6 @@ namespace FileMaintenance.Core
         void Backup(string sourcePath, string targetFilePath);
         void Delete(string path);
         void AddCondition(Func<FileInfo, bool> expression);
-        string GroupFilesToDirectory();
+        string GroupFilesInNewDirectory();
     }
 }

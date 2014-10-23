@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using FileMaintenance.Services;
 
 namespace FileMaintenance.Core.Models
 {

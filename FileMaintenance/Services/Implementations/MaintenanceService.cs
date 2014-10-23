@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using FileMaintenance.Core;
 using FileMaintenance.Core.Models;
@@ -67,6 +66,7 @@ namespace FileMaintenance.Services
 
         public void Start()
         {
+
             _maintenanceSummary.ExecutionStartTimeUtc = DateTime.UtcNow;
 
             foreach (BaseMaintenanceItem item in _maintenanceServiceConfig.MaintenanceItems)
@@ -83,7 +83,7 @@ namespace FileMaintenance.Services
             }
 
             _maintenanceSummary.ExecutionEndTimeUtc = DateTime.UtcNow;
-            SendAlertsAndSummary();
+            //SendAlertsAndSummary();
         }
 
         #endregion

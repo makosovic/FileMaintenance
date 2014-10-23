@@ -53,12 +53,12 @@ namespace FileMaintenance.Core.Models
 
             if (maintenanceManager.Files.Any())
             {
-                string dummyFullPath = maintenanceManager.GroupFilesToDirectory();
-                string dummyRelativePath = dummyFullPath.Replace(Path + "\\", "");
+                string sourcePath = maintenanceManager.GroupFilesInNewDirectory();
+                string sourceRelativePath = sourcePath.Replace(Path + "\\", "");
 
                 foreach (MaintenanceItemBackup backup in Backups)
                 {
-                    maintenanceManager.Backup(dummyFullPath, System.IO.Path.Combine(backup.Path, dummyRelativePath) + ".zip");
+                    maintenanceManager.Backup(sourcePath, System.IO.Path.Combine(backup.Path, sourceRelativePath) + ".zip");
                 }
 
                 foreach (string file in maintenanceManager.Files)

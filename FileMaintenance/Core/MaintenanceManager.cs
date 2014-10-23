@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FileMaintenance.Core.Helpers;
 using FileMaintenance.Core.Models;
 
@@ -59,6 +57,11 @@ namespace FileMaintenance.Core
 
         #region public methods
 
+        public void AddCondition(Func<FileInfo, bool> expression)
+        {
+            _fileFilters.Add(expression);
+            _conditionsChanged = true;
+        }
 
         public void Backup(string sourcePath, string targetFilePath)
         {
@@ -91,7 +94,7 @@ namespace FileMaintenance.Core
             }
             else
             {
-                using (var zip = ZipFile.Open(targetFilePath, ZipArchiveMode.Create))
+                using (ZipArchive zip = ZipFile.Open(targetFilePath, ZipArchiveMode.Create))
                 {
                     zip.CreateEntryFromFile(sourceFi.FullName, sourceFi.Name);
                 }
@@ -106,13 +109,7 @@ namespace FileMaintenance.Core
             _maintenanceSummary.IncrementDeletedFileCount(path);
         }
 
-        public void AddCondition(Func<FileInfo, bool> expression)
-        {
-            _fileFilters.Add(expression);
-            _conditionsChanged = true;
-        }
-
-        public string GroupFilesToDirectory()
+        public string GroupFilesInNewDirectory()
         {
             if (_conditionsChanged)
             {
@@ -143,27 +140,27 @@ namespace FileMaintenance.Core
 
         private IEnumerable<FileInfo> Traverse(string path)
         {
-            Queue<string> directoriesToBeVisited = new Queue<string>();
-            ICollection<FileInfo> fileInfos = new Collection<FileInfo>();
+                Queue<string> directoriesToBeVisited = new Queue<string>();
+                ICollection<FileInfo> fileInfos = new Collection<FileInfo>();
 
-            PopulateDirectoriesAndFileInfos(path, directoriesToBeVisited, fileInfos);
+                PopulateDirectoriesAndFileInfos(path, directoriesToBeVisited, fileInfos);
 
-            while (directoriesToBeVisited.Count != 0)
-            {
-                PopulateDirectoriesAndFileInfos(directoriesToBeVisited.Dequeue(), directoriesToBeVisited, fileInfos);
-            }
+                while (directoriesToBeVisited.Count != 0)
+                {
+                    PopulateDirectoriesAndFileInfos(directoriesToBeVisited.Dequeue(), directoriesToBeVisited, fileInfos);
+                }
 
-            return fileInfos;
+                return fileInfos;
         }
 
-        private void PopulateDirectoriesAndFileInfos(string directoryToBeVisited, Queue<string> directoriesToBeVisited, ICollection<FileInfo> fileInfos)
+        private void PopulateDirectoriesAndFileInfos(string targetdirectory, Queue<string> directoriesToBeVisited, ICollection<FileInfo> fileInfos)
         {
-            foreach (string directory in IoHelper.GetDirectories(directoryToBeVisited, _fileFilters))
+            foreach (string directory in IoHelper.GetDirectories(targetdirectory, _fileFilters))
             {
                 directoriesToBeVisited.Enqueue(directory);
             }
 
-            foreach (FileInfo fileInfo in IoHelper.GetFileInfos(directoryToBeVisited, _fileFilters))
+            foreach (FileInfo fileInfo in IoHelper.GetFileInfos(targetdirectory, _fileFilters))
             {
                 fileInfos.Add(fileInfo);
             }

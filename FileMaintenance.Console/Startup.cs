@@ -1,16 +1,15 @@
 ﻿using System;
 using FileMaintenance.Services;
 
-namespace FileMaintenance
+namespace FileMaintenance.Console
 {
     static class Startup
     {
         static void Main()
         {
-            IMaintenanceService maintenanceService = new MaintenanceService();
-
             try
             {
+                IMaintenanceService maintenanceService = new MaintenanceService();
                 maintenanceService.Start();
             }
             catch (Exception ex)

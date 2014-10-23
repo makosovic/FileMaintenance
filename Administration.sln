@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance", "FileMain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance.UnitTest", "FileMaintenance.UnitTest\FileMaintenance.UnitTest.csproj", "{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance.Console", "FileMaintenance.Console\FileMaintenance.Console.csproj", "{7F79A0A4-917F-4C5E-A922-3DF23087D13A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F79A0A4-917F-4C5E-A922-3DF23087D13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F79A0A4-917F-4C5E-A922-3DF23087D13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F79A0A4-917F-4C5E-A922-3DF23087D13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F79A0A4-917F-4C5E-A922-3DF23087D13A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
