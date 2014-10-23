@@ -10,7 +10,7 @@ using FileMaintenance.Properties;
 
 namespace FileMaintenance.Services
 {
-    public class MaintenanceService : IMaintenanceService, IMaintenanceServiceAction
+    public class MaintenanceService : IMaintenanceService
     {
 
         #region private fields
@@ -73,7 +73,7 @@ namespace FileMaintenance.Services
             {
                 if (Directory.Exists(item.Path))
                 {
-                    IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary);
+                    IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary, item.Path);
                     item.ExecuteMaintenance(maintenanceManager);
                 }
                 else if ((item as IBackupable) != null)

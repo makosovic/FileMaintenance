@@ -7,10 +7,11 @@ namespace FileMaintenance.Core
 {
     public interface IMaintenanceManager
     {
+        IEnumerable<string> Files { get; }
+
         void Backup(string sourcePath, string targetFilePath);
         void Delete(string path);
-
-        IEnumerable<string> Traverse(string path);
         void AddCondition(Func<FileInfo, bool> expression);
+        string GroupFilesToDirectory();
     }
 }

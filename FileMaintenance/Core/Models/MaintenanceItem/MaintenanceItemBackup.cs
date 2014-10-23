@@ -21,9 +21,8 @@ namespace FileMaintenance.Core.Models
         public override void ExecuteMaintenance(IMaintenanceManager maintenanceManager)
         {
             maintenanceManager.AddCondition(file => DateTime.UtcNow.Subtract(this.KeepFor) > file.LastWriteTimeUtc);
-            IEnumerable<string> files = maintenanceManager.Traverse(Path);
 
-            foreach (string file in files)
+            foreach (string file in maintenanceManager.Files)
             {
                 maintenanceManager.Delete(file);
             }
