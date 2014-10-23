@@ -21,6 +21,7 @@ namespace FileMaintenance.Core.Models
         {
             get { return _backups != null && _backups.Any(); }
         }
+
         public IReadOnlyCollection<MaintenanceItemBackup> Backups
         {
             get { return new ReadOnlyCollection<MaintenanceItemBackup>(_backups); }
@@ -47,7 +48,7 @@ namespace FileMaintenance.Core.Models
 
         #region public methods
 
-        public override void ExecuteMaintenance(IMaintenanceServiceAction maintenanceService)
+        public override void ExecuteMaintenance(IMaintenanceManager maintenanceService)
         {
             if (IsBackedUp)
             {
@@ -59,7 +60,6 @@ namespace FileMaintenance.Core.Models
             }
             else
             {
-                base.ExecuteMaintenance(maintenanceService);
             }
         }
 

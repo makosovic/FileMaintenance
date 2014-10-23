@@ -60,6 +60,8 @@
     <Compile Include="Core\Helpers\ConfigurationHelper.cs" />
     <Compile Include="Core\Helpers\IoHelper.cs" />
     <Compile Include="Core\Helpers\MailMessageHelper.cs" />
+    <Compile Include="Core\IMaintenanceManager.cs" />
+    <Compile Include="Core\MaintenanceManager.cs" />
     <Compile Include="Core\Models\MaintenanceSummary\FileMaintenanceBuilder.cs" />
     <Compile Include="Core\Models\MaintenanceSummary\MaintenanceDiscSummary.cs" />
     <Compile Include="Core\Models\MaintenanceSummary\MaintenanceSummary.cs" />

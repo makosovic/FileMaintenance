@@ -26,18 +26,7 @@ namespace FileMaintenance.Core.Models
 
         #region public methods
 
-        public IFileMaintenanceBuilder<BaseMaintenanceItem> CreateMaintenance()
-        {
-            return new FileMaintenanceBuilder<BaseMaintenanceItem>(this);
-        }
-
-        public virtual void ExecuteMaintenance(IMaintenanceServiceAction maintenanceService)
-        {
-            this.CreateMaintenance()
-                .Where(file => DateTime.UtcNow.Subtract(this.KeepFor) > file.LastWriteTimeUtc)
-                .Delete(filePath => maintenanceService.Delete(filePath))
-                .Execute();
-        }
+        public abstract void ExecuteMaintenance(IMaintenanceManager maintenanceService);
 
         #endregion
 
