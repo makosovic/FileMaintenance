@@ -113,7 +113,7 @@ namespace FileMaintenance.Core.Models
         public sealed override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine(string.Format("Duration: {0:G}", this.Duration));
+            builder.AppendLine(string.Format("Duration: {0:g}", this.Duration));
             builder.AppendLine(string.Format("Time started: {0:F} UTC", this.ExecutionStartTimeUtc));
             builder.AppendLine(string.Format("Time ended: {0:F} UTC", this.ExecutionEndTimeUtc));
             builder.AppendLine();
