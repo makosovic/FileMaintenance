@@ -46,11 +46,6 @@ namespace FileMaintenance.Core
 
         public MaintenanceManager(IMaintenanceSummary maintenanceSummary, string maintenancePath)
         {
-            if (!Directory.Exists(maintenancePath))
-            {
-                throw new ArgumentException("maintenancePath");
-            }
-
             _conditionsChanged = true;
             _maintenanceSummary = maintenanceSummary;
             _maintenancePath = maintenancePath;
