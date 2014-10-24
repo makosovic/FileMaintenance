@@ -6,12 +6,16 @@ namespace FileMaintenance.Core.Models
     public interface IMaintenanceSummary
     {
         int MaintenanceItemCount { get; }
-        bool? IsAnyDiskLow { get; }
+        bool IsAnyDiskLow { get; }
+        bool HasErrors { get; }
         IEnumerable<IMaintenanceDiskSummary> MaintenanceDiskSummaries { get; }
+        IEnumerable<string> Errors { get; }
         TimeSpan Duration { get; }
         DateTime ExecutionStartTimeUtc { get; set; }
         DateTime ExecutionEndTimeUtc { get; set; }
-        void IncrementDeletedFileCount(string path);
+
         string GetDiskSpaceReport();
+        void IncrementDeletedFileCount(string path);
+        void AddError(string message);
     }
 }

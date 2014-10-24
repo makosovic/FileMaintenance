@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using FileMaintenance.Core.Helpers;
@@ -12,6 +13,7 @@ namespace FileMaintenance.Core.Models
 
         private readonly IDictionary<string, IMaintenanceDiskSummary> _maintenanceDiskSummaries;
         private readonly int _maintenanceItemCount;
+        private readonly ICollection<string> _errors; 
         private bool? _anyDiskLow;
 
         #endregion
@@ -26,19 +28,24 @@ namespace FileMaintenance.Core.Models
         /// <summary>
         /// Gets wheather any of the disks maintained are low
         /// </summary>
-        /// <returns>Null if there is no disks registered for maintenance.</returns>
-        public bool? IsAnyDiskLow
+        public bool IsAnyDiskLow
         {
             get
             {
-                if (_maintenanceDiskSummaries.Count == 0) return null;
+                if (_maintenanceDiskSummaries.Count == 0) return false;
 
-                if (_anyDiskLow != null) return _anyDiskLow;
+                if (_anyDiskLow != null) return (bool) _anyDiskLow;
 
                 _anyDiskLow = _maintenanceDiskSummaries.Any(x => x.Value.FreeDiskSpace / (float)x.Value.TotalDiskSize < 0.1);
-                return _anyDiskLow;
+                return (bool)_anyDiskLow;
             }
         }
+
+        /// <summary>
+        /// Gets wheather there was any errors executing maintenance.
+        /// </summary>
+        public bool HasErrors { get { return _errors.Count > 0; } }
+
 
         /// <summary>
         /// Gets the collection of IMaintenanceDiskSummary for enumeration
@@ -47,6 +54,11 @@ namespace FileMaintenance.Core.Models
         {
             get { return _maintenanceDiskSummaries.Values; }
         }
+
+        /// <summary>
+        /// Gets the collection of errors that happened during the maintenance.
+        /// </summary>
+        public IEnumerable<string> Errors { get { return _errors; } }
 
         /// <summary>
         /// Gets the duration of maintenance
@@ -89,6 +101,8 @@ namespace FileMaintenance.Core.Models
         {
             _maintenanceItemCount = 0;
             _maintenanceDiskSummaries = new Dictionary<string, IMaintenanceDiskSummary>();
+            _errors = new Collection<string>();
+
             foreach (var maintenanceItemPath in maintenanceItemPaths)
             {
                 this._maintenanceItemCount++;
@@ -108,6 +122,11 @@ namespace FileMaintenance.Core.Models
             {
                 _maintenanceDiskSummaries[name].IncrementDeletedFileCount();
             }
+        }
+
+        public void AddError(string message)
+        {
+            _errors.Add(message);
         }
 
         public sealed override string ToString()

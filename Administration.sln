@@ -5,9 +5,9 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance", "FileMaintenance\FileMaintenance.csproj", "{B96D4AD7-071C-4F95-8106-D2FB39226782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance.UnitTests", "FileMaintenance.UnitTest\FileMaintenance.UnitTests.csproj", "{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileMaintenance.UnitTests", "FileMaintenance.UnitTests\FileMaintenance.UnitTests.csproj", "{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMaintenance", "FileMaintenance.Console\LogMaintenance.csproj", "{7F79A0A4-917F-4C5E-A922-3DF23087D13A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMaintenance", "LogMaintenance\LogMaintenance.csproj", "{7F79A0A4-917F-4C5E-A922-3DF23087D13A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
