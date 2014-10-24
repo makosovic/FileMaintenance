@@ -46,6 +46,11 @@ namespace FileMaintenance.Core
 
         public MaintenanceManager(IMaintenanceSummary maintenanceSummary, string maintenancePath)
         {
+            if (!Directory.Exists(maintenancePath))
+            {
+                throw new ArgumentException("maintenancePath");
+            }
+
             _conditionsChanged = true;
             _maintenanceSummary = maintenanceSummary;
             _maintenancePath = maintenancePath;
@@ -140,17 +145,17 @@ namespace FileMaintenance.Core
 
         private IEnumerable<FileInfo> Traverse(string path)
         {
-                Queue<string> directoriesToBeVisited = new Queue<string>();
-                ICollection<FileInfo> fileInfos = new Collection<FileInfo>();
+            Queue<string> directoriesToBeVisited = new Queue<string>();
+            ICollection<FileInfo> fileInfos = new Collection<FileInfo>();
 
-                PopulateDirectoriesAndFileInfos(path, directoriesToBeVisited, fileInfos);
+            PopulateDirectoriesAndFileInfos(path, directoriesToBeVisited, fileInfos);
 
-                while (directoriesToBeVisited.Count != 0)
-                {
-                    PopulateDirectoriesAndFileInfos(directoriesToBeVisited.Dequeue(), directoriesToBeVisited, fileInfos);
-                }
+            while (directoriesToBeVisited.Count != 0)
+            {
+                PopulateDirectoriesAndFileInfos(directoriesToBeVisited.Dequeue(), directoriesToBeVisited, fileInfos);
+            }
 
-                return fileInfos;
+            return fileInfos;
         }
 
         private void PopulateDirectoriesAndFileInfos(string targetdirectory, Queue<string> directoriesToBeVisited, ICollection<FileInfo> fileInfos)

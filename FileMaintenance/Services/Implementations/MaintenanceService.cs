@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using FileMaintenance.Core;
 using FileMaintenance.Core.Models;
@@ -71,19 +70,12 @@ namespace FileMaintenance.Services
 
             foreach (BaseMaintenanceItem item in _maintenanceServiceConfig.MaintenanceItems)
             {
-                if (Directory.Exists(item.Path))
-                {
-                    IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary, item.Path);
-                    item.ExecuteMaintenance(maintenanceManager);
-                }
-                else if ((item as IBackupable) != null)
-                {
-                    throw new ApplicationException("Invalid backup path");
-                }
+                IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary, item.Path);
+                item.ExecuteMaintenance(maintenanceManager);
             }
 
             _maintenanceSummary.ExecutionEndTimeUtc = DateTime.UtcNow;
-            //SendAlertsAndSummary();
+            SendAlertsAndSummary();
         }
 
         #endregion

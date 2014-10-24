@@ -1,12 +1,15 @@
 ﻿using System;
 using FileMaintenance.Services;
+using LogMaintenance.Logging;
 
-namespace FileMaintenance.Console
+namespace LogMaintenance
 {
     static class Startup
     {
         static void Main()
         {
+            ILoggingService loggingService = new LoggingService();
+
             try
             {
                 IMaintenanceService maintenanceService = new MaintenanceService();
@@ -14,6 +17,7 @@ namespace FileMaintenance.Console
             }
             catch (Exception ex)
             {
+                loggingService.HandleException(ex);
             }
         }
     }

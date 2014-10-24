@@ -6,8 +6,8 @@
     <ProjectGuid>{DD23DFEB-3EFF-4B3E-870B-9993F4B7193C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileMaintenance.UnitTest</RootNamespace>
-    <AssemblyName>FileMaintenance.UnitTest</AssemblyName>
+    <RootNamespace>FileMaintenance.UnitTests</RootNamespace>
+    <AssemblyName>FileMaintenance.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

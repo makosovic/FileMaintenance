@@ -4,7 +4,7 @@ using FileMaintenance.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 
-namespace FileMaintenance.UnitTest
+namespace FileMaintenance.UnitTests
 {
     [TestClass]
     public class MaintenanceManagerShould

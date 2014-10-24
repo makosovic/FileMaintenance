@@ -1,7 +1,7 @@
 ﻿using FileMaintenance.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileMaintenance.UnitTest
+namespace FileMaintenance.UnitTests
 {
     [TestClass]
     public class ConfigurationHelperShould
