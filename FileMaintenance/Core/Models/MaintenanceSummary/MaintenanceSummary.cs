@@ -15,6 +15,7 @@ namespace FileMaintenance.Core.Models
         private readonly int _maintenanceItemCount;
         private readonly ICollection<string> _errors; 
         private bool? _anyDiskLow;
+        private string _serverName;
 
         #endregion
 
@@ -45,6 +46,11 @@ namespace FileMaintenance.Core.Models
         /// Gets wheather there was any errors executing maintenance.
         /// </summary>
         public bool HasErrors { get { return _errors.Count > 0; } }
+
+        /// <summary>
+        /// Gets server name.
+        /// </summary>
+        public string ServerName { get { return _serverName; } }
 
 
         /// <summary>
@@ -99,6 +105,7 @@ namespace FileMaintenance.Core.Models
         /// <param name="maintenanceItemPaths"></param>
         public MaintenanceSummary(IEnumerable<string> maintenanceItemPaths)
         {
+            _serverName = System.Environment.MachineName;
             _maintenanceItemCount = 0;
             _maintenanceDiskSummaries = new Dictionary<string, IMaintenanceDiskSummary>();
             _errors = new Collection<string>();

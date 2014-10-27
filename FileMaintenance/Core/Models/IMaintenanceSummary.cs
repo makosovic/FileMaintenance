@@ -8,6 +8,7 @@ namespace FileMaintenance.Core.Models
         int MaintenanceItemCount { get; }
         bool IsAnyDiskLow { get; }
         bool HasErrors { get; }
+        string ServerName { get; }
         IEnumerable<IMaintenanceDiskSummary> MaintenanceDiskSummaries { get; }
         IEnumerable<string> Errors { get; }
         TimeSpan Duration { get; }

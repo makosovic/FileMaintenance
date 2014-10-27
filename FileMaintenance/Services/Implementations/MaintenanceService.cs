@@ -6,6 +6,7 @@ using System.Linq;
 using FileMaintenance.Core;
 using FileMaintenance.Core.Models;
 using FileMaintenance.Properties;
+using RazorEngine.Templating;
 
 namespace FileMaintenance.Services
 {
@@ -95,7 +96,9 @@ namespace FileMaintenance.Services
             {
                 foreach (var notificationService in _notificationServices)
                 {
-                    notificationService.Send(Resources.NotificationService_SummaryMessage_Subject, _maintenanceSummary.ToString());
+                    var templateService = new TemplateService();
+                    var emailHtmlBody = templateService.Parse(File.ReadAllText(System.Configuration.ConfigurationManager.AppSettings["EmailTemplate.Path"]), _maintenanceSummary, null, null);
+                    notificationService.Send(Resources.NotificationService_SummaryMessage_Subject, emailHtmlBody);
                 }
             }
 

@@ -31,6 +31,7 @@ namespace FileMaintenance.Services
                 throw new ArgumentNullException();
 
             MailMessage mailMessage = new MailMessage();
+            mailMessage.IsBodyHtml = true;
 
             mailMessage.From = new MailAddress(_mailServiceConfig.From);
 
@@ -51,6 +52,7 @@ namespace FileMaintenance.Services
 
 
             MailMessage mailMessage = new MailMessage();
+            mailMessage.IsBodyHtml = true;
 
             mailMessage.From = new MailAddress(_mailServiceConfig.From);
 
