@@ -96,9 +96,17 @@ namespace FileMaintenance.Services
             {
                 foreach (var notificationService in _notificationServices)
                 {
-                    var templateService = new TemplateService();
-                    var emailHtmlBody = templateService.Parse(File.ReadAllText(System.Configuration.ConfigurationManager.AppSettings["EmailTemplate.Path"]), _maintenanceSummary, null, null);
-                    notificationService.Send(Resources.NotificationService_SummaryMessage_Subject, emailHtmlBody);
+                    TemplateService templateService = new TemplateService();
+                    string templatePath = System.Configuration.ConfigurationManager.AppSettings["EmailTemplate.Path"];
+                    if (!string.IsNullOrEmpty(templatePath) && File.Exists(templatePath))
+                    {
+                        string emailHtmlBody = templateService.Parse(File.ReadAllText(templatePath), _maintenanceSummary, null, null);
+                        notificationService.Send(Resources.NotificationService_SummaryMessage_Subject, emailHtmlBody);
+                    }
+                    else
+                    {
+                        notificationService.Send(Resources.NotificationService_SummaryMessage_Subject, _maintenanceSummary.ToString());
+                    }
                 }
             }
 
