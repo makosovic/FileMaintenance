@@ -15,7 +15,7 @@ namespace FileMaintenance.Core.Models
         private readonly int _maintenanceItemCount;
         private readonly ICollection<string> _errors; 
         private bool? _anyDiskLow;
-        private string _serverName;
+        private readonly string _serverName;
 
         #endregion
 
@@ -110,7 +110,7 @@ namespace FileMaintenance.Core.Models
             _maintenanceDiskSummaries = new Dictionary<string, IMaintenanceDiskSummary>();
             _errors = new Collection<string>();
 
-            foreach (var maintenanceItemPath in maintenanceItemPaths)
+            foreach (string maintenanceItemPath in maintenanceItemPaths)
             {
                 this._maintenanceItemCount++;
                 this.TryAddDisk(IoHelper.GetDiskName(maintenanceItemPath));
@@ -148,7 +148,7 @@ namespace FileMaintenance.Core.Models
             builder.AppendLine();
             builder.AppendLine("Disks affected:");
 
-            foreach (var maintenanceDiskSummary in this._maintenanceDiskSummaries)
+            foreach (KeyValuePair<string, IMaintenanceDiskSummary> maintenanceDiskSummary in this._maintenanceDiskSummaries)
             {
                 builder.AppendLine();
                 builder.AppendLine(string.Format("Name: {0}", maintenanceDiskSummary.Key));

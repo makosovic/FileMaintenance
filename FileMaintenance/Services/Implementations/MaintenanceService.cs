@@ -21,6 +21,12 @@ namespace FileMaintenance.Services
 
         #endregion
 
+        #region properties
+
+        public IMaintenanceSummary MaintenanceSummary { get { return _maintenanceSummary; } }
+
+        #endregion
+
         #region constructors
 
         public MaintenanceService()
@@ -71,14 +77,14 @@ namespace FileMaintenance.Services
 
             foreach (BaseMaintenanceItem item in _maintenanceServiceConfig.MaintenanceItems)
             {
-                if (Directory.Exists(item.Path))
+                try
                 {
                     IMaintenanceManager maintenanceManager = new MaintenanceManager(_maintenanceSummary, item.Path);
                     item.ExecuteMaintenance(maintenanceManager);
                 }
-                else if ((item as IBackupable) != null)
+                catch (Exception ex)
                 {
-                    throw new ApplicationException("Invalid maintenance item path");
+                    _maintenanceSummary.AddError(ex.ToString());
                 }
             }
 
@@ -94,7 +100,7 @@ namespace FileMaintenance.Services
         {
             if (_maintenanceServiceConfig.AlertSummary)
             {
-                foreach (var notificationService in _notificationServices)
+                foreach (INotificationService notificationService in _notificationServices)
                 {
                     TemplateService templateService = new TemplateService();
                     string templatePath = System.Configuration.ConfigurationManager.AppSettings["EmailTemplate.Path"];
@@ -112,7 +118,7 @@ namespace FileMaintenance.Services
 
             if (_maintenanceServiceConfig.AlertLowDisk && _maintenanceSummary.IsAnyDiskLow == true)
             {
-                foreach (var notificationService in _notificationServices)
+                foreach (INotificationService notificationService in _notificationServices)
                 {
                     notificationService.Send(Resources.NotificationService_AlertLowDiskMessage_Subject, _maintenanceSummary.GetDiskSpaceReport());
                 }

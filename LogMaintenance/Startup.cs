@@ -14,6 +14,11 @@ namespace LogMaintenance
             {
                 IMaintenanceService maintenanceService = new MaintenanceService();
                 maintenanceService.Start();
+
+                foreach (string error in maintenanceService.MaintenanceSummary.Errors)
+                {
+                    loggingService.HandleMessage(error);
+                }
             }
             catch (Exception ex)
             {

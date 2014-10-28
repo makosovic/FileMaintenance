@@ -39,7 +39,7 @@ namespace FileMaintenance.Services
 
         public MailServiceConfig()
         {
-            var mailConfig = ConfigurationManager.GetSection("mailSettings") as MailSettingsConfigSection;
+            MailSettingsConfigSection mailConfig = ConfigurationManager.GetSection("mailSettings") as MailSettingsConfigSection;
 
             if (mailConfig == null)
                 throw new ArgumentNullException("mailSettings");

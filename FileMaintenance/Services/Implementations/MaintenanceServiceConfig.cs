@@ -40,7 +40,7 @@ namespace FileMaintenance.Services
 
         private void InitItemsFromConfig()
         {
-            var config = ConfigurationManager.GetSection("fileMaintenance") as FileMaintenanceConfigSection;
+            FileMaintenanceConfigSection config = ConfigurationManager.GetSection("fileMaintenance") as FileMaintenanceConfigSection;
 
             if (config == null)
                 throw new ArgumentNullException("fileMaintenance");
