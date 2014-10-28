@@ -16,6 +16,10 @@ namespace FileMaintenance.Services
 
         #region constructors
 
+        /// <summary>
+        /// Gets an instance of mailing service configured with given MailServiceConfig class.
+        /// </summary>
+        /// <param name="mailServiceConfig"></param>
         public MailService(IMailServiceConfig mailServiceConfig)
         {
             _mailServiceConfig = mailServiceConfig;
@@ -25,7 +29,12 @@ namespace FileMaintenance.Services
 
         #region public methods
 
-        public void Send(string subject, string message)
+        /// <summary>
+        /// Send an email message.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        public void Send(string title, string message)
         {
             if (string.IsNullOrEmpty(message))
                 throw new ArgumentNullException();
@@ -35,7 +44,7 @@ namespace FileMaintenance.Services
 
             mailMessage.From = new MailAddress(_mailServiceConfig.From);
 
-            mailMessage.Subject = subject;
+            mailMessage.Subject = title;
             mailMessage.Body = message;
 
             mailMessage.To.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Recipients));
@@ -45,7 +54,12 @@ namespace FileMaintenance.Services
             _mailServiceConfig.SmtpClient.Send(mailMessage);
         }
 
-        public async void SendAsync(string subject, string message)
+        /// <summary>
+        /// Send a message asynchronously.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        public async void SendAsync(string title, string message)
         {
             if (string.IsNullOrEmpty(message))
                 throw new ArgumentNullException();
@@ -56,7 +70,7 @@ namespace FileMaintenance.Services
 
             mailMessage.From = new MailAddress(_mailServiceConfig.From);
 
-            mailMessage.Subject = subject;
+            mailMessage.Subject = title;
             mailMessage.Body = message;
 
             mailMessage.To.Add(MailMessageHelper.AggregateEmails(_mailServiceConfig.Recipients));

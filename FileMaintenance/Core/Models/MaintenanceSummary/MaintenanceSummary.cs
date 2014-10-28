@@ -100,7 +100,7 @@ namespace FileMaintenance.Core.Models
         #region constructors
 
         /// <summary>
-        /// 
+        /// Create an instance of maintenance summary for given maintenance item paths.
         /// </summary>
         /// <param name="maintenanceItemPaths"></param>
         public MaintenanceSummary(IEnumerable<string> maintenanceItemPaths)
@@ -121,6 +121,9 @@ namespace FileMaintenance.Core.Models
 
         #region public methods
 
+        /// <summary>
+        /// Increments deleted file count.
+        /// </summary>
         public void IncrementDeletedFileCount(string path)
         {
             string name = IoHelper.GetDiskName(path);
@@ -131,6 +134,9 @@ namespace FileMaintenance.Core.Models
             }
         }
 
+        /// <summary>
+        /// Adds an error to the summary.
+        /// </summary>
         public void AddError(string message)
         {
             _errors.Add(message);
@@ -160,6 +166,9 @@ namespace FileMaintenance.Core.Models
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Gets report for all disks affected depending on what alerts have been set up.
+        /// </summary>
         public string GetDiskSpaceReport()
         {
             StringBuilder builder = new StringBuilder();

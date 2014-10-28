@@ -25,18 +25,38 @@ namespace FileMaintenance.Services
 
         #region properties
 
+        /// <summary>
+        /// Gets the configured smtp client.
+        /// </summary>
         public SmtpClient SmtpClient { get { return _smtpClient; } }
 
+        /// <summary>
+        /// Gets the email address message is being sent from.
+        /// </summary>
         public string From { get { return _from; } }
 
+        /// <summary>
+        /// Gets the collection of recipients.
+        /// </summary>
         public IEnumerable<string> Recipients { get { return _recipients.AsEnumerable(); } }
+
+        /// <summary>
+        /// Gets the collection of Cc.
+        /// </summary>
         public IEnumerable<string> Cc { get { return _cc.AsEnumerable(); } }
+
+        /// <summary>
+        /// Gets the collection of Bcc.
+        /// </summary>
         public IEnumerable<string> Bcc { get { return _bcc.AsEnumerable(); } }
 
         #endregion
 
         #region constructors
 
+        /// <summary>
+        /// Creates an instance of MailServiceConfig initialized from Configuration file.
+        /// </summary>
         public MailServiceConfig()
         {
             MailSettingsConfigSection mailConfig = ConfigurationManager.GetSection("mailSettings") as MailSettingsConfigSection;

@@ -23,12 +23,18 @@ namespace FileMaintenance.Services
 
         #region properties
 
+        /// <summary>
+        /// Gets the maintenance summary.
+        /// </summary>
         public IMaintenanceSummary MaintenanceSummary { get { return _maintenanceSummary; } }
 
         #endregion
 
         #region constructors
 
+        /// <summary>
+        /// Creates and instance of maintenance service configured with Configuration file.
+        /// </summary>
         public MaintenanceService()
         {
             IMailServiceConfig mailServiceConfig = new MailServiceConfig();
@@ -41,6 +47,9 @@ namespace FileMaintenance.Services
             _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
+        /// <summary>
+        /// Creates and instance of maintenance service configured with maintenanceServiceConfig and Configuration file for mailing.
+        /// </summary>
         public MaintenanceService(IMaintenanceServiceConfig maintenanceServiceConfig)
         {
             IMailServiceConfig mailServiceConfig = new MailServiceConfig();
@@ -53,6 +62,10 @@ namespace FileMaintenance.Services
             _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
+        /// <summary>
+        /// Creates an instance of maintenance service configured with Configuration file and with given collection of notificationServices.
+        /// </summary>
+        /// <param name="notificationServices"></param>
         public MaintenanceService(IEnumerable<INotificationService> notificationServices)
         {
             _notificationServices = notificationServices;
@@ -60,6 +73,11 @@ namespace FileMaintenance.Services
             _maintenanceSummary = new MaintenanceSummary(_maintenanceServiceConfig.MaintenanceItems.Select(x => x.Path));
         }
 
+        /// <summary>
+        /// Creates an instance of maintenance service configured with given maintenanceServiceConfig and collection of notificationServices.
+        /// </summary>
+        /// <param name="notificationServices"></param>
+        /// <param name="maintenanceServiceConfig"></param>
         public MaintenanceService(IEnumerable<INotificationService> notificationServices, IMaintenanceServiceConfig maintenanceServiceConfig)
         {
             _notificationServices = notificationServices;
@@ -71,6 +89,9 @@ namespace FileMaintenance.Services
 
         #region public methods
 
+        /// <summary>
+        /// Starts the maintenance.
+        /// </summary>
         public void Start()
         {
             _maintenanceSummary.ExecutionStartTimeUtc = DateTime.UtcNow;

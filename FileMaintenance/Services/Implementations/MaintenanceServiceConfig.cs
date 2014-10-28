@@ -18,15 +18,28 @@ namespace FileMaintenance.Services
 
         #region properties
 
+        /// <summary>
+        /// Gets whether alerts are sent if any disks are low.
+        /// </summary>
         public bool AlertLowDisk { get; private set; }
+
+        /// <summary>
+        /// Gets whether alerts are sent if any disks are low.
+        /// </summary>
         public bool AlertSummary { get; private set; }
 
+        /// <summary>
+        /// Gets the collection of maintenance items configured for maintenance.
+        /// </summary>
         public IEnumerable<BaseMaintenanceItem> MaintenanceItems { get { return _maintenanceItems.AsEnumerable(); } }
 
         #endregion
 
         #region constructors
 
+        /// <summary>
+        /// Creates an instance of MaintenanceServiceConfig from Configuration file.
+        /// </summary>
         public MaintenanceServiceConfig()
         {
             _maintenanceItems = new List<BaseMaintenanceItem>();
