@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema id="MailSettingsSchema"
-    targetNamespace="http://king-ict.hr/MailSettingsSchema.xsd"
+    targetNamespace="http://filemaintenance.net/MailSettingsSchema.xsd"
     elementFormDefault="qualified"
-    xmlns="http://king-ict.hr/MailSettingsSchema.xsd"
-    xmlns:mstns="http://king-ict.hr/MailSettingsSchema.xsd"
+    xmlns="http://filemaintenance.net/MailSettingsSchema.xsd"
+    xmlns:mstns="http://filemaintenance.net/MailSettingsSchema.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     attributeFormDefault="unqualified"
 >

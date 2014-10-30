@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema id="FileMaintenanceScheme"
-    targetNamespace="http://king-ict.hr/FileMaintenanceSchema.xsd"
+    targetNamespace="http://filemaintenance.net/FileMaintenanceSchema.xsd"
     elementFormDefault="qualified"
-    xmlns="http://king-ict.hr/FileMaintenanceSchema.xsd"
-    xmlns:mstns="http://king-ict.hr/FileMaintenanceSchema.xsd"
+    xmlns="http://filemaintenance.net/FileMaintenanceSchema.xsd"
+    xmlns:mstns="http://filemaintenance.net/FileMaintenanceSchema.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
   <xs:simpleType name="alertcondition">
