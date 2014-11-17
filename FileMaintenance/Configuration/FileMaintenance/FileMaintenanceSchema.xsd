@@ -18,7 +18,7 @@
         <xs:element name="item" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="backups">
+              <xs:element name="backups" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="add">

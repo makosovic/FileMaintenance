@@ -10,6 +10,7 @@ namespace FileMaintenance.Services
 {
     public class MaintenanceServiceConfig : IMaintenanceServiceConfig
     {
+
         #region private fields
 
         private readonly ICollection<BaseMaintenanceItem> _maintenanceItems; 
@@ -77,12 +78,6 @@ namespace FileMaintenance.Services
 
                 MaintenanceItem tmpMaintenanceItem = new MaintenanceItem(item.Path, new TimeSpan(days, hours, minutes, 0));
                 MaintenanceItemBackupConfigElementCollection maintenanceItemBackups = item.Backups;
-
-                if (maintenanceItemBackups == null)
-                    throw new ArgumentNullException("backups");
-
-                if (maintenanceItemBackups.Count == 0)
-                    throw new ArgumentOutOfRangeException("backups");
 
                 foreach (MaintenanceItemBackupConfigElement backup in maintenanceItemBackups)
                 {

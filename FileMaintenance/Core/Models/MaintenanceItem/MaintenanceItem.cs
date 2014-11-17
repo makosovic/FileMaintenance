@@ -74,11 +74,11 @@ namespace FileMaintenance.Core.Models
 
             if (maintenanceManager.Files.Any())
             {
-                string sourcePath = maintenanceManager.GroupFilesInNewDirectory();
-                string sourceRelativePath = sourcePath.Replace(Path + "\\", "");
-
                 foreach (MaintenanceItemBackup backup in Backups)
                 {
+                    string sourcePath = maintenanceManager.GroupFilesInNewDirectory();
+                    string sourceRelativePath = sourcePath.Replace(Path + "\\", "");
+
                     maintenanceManager.Backup(sourcePath, System.IO.Path.Combine(backup.Path, sourceRelativePath) + ".zip");
                 }
 
